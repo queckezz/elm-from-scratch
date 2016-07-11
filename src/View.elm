@@ -9,8 +9,13 @@ root: Model -> Html Msg
 root model =
   div [] [
     h1 [] [ text "News!" ],
-    ul []
-      (List.map newsItem model.news),
+      case model.news of
+        Succeed news ->
+          ul [] (List.map newsItem news)
+        Loading ->
+          text "Loading"
+        Failed error ->
+          p [] [ text (toString error) ],
     div [] [ code [] [ text (toString model) ] ]
   ]
 

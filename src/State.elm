@@ -5,17 +5,17 @@ import Types exposing (..)
 
 init : (Model, Cmd Msg)
 init = (
-  { news = [], error = Nothing },
+  { news = Loading },
   getNews
   )
+
+-- Debug.log similar to `console.log`
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-      GetNewsResponse (Err errorMessage) ->
-        ({model | error = Just errorMessage }, Cmd.none)
-      GetNewsResponse (Ok news) ->
-        ({ model | news = news }, Cmd.none)
+      GetNewsResponse response ->
+        ({ model | news = response }, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
